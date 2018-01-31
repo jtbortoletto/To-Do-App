@@ -15,7 +15,7 @@ function onReady() {
     // create a new input
     let checkbox = document.createElement('input');
 
-    // set tje input's type to checkbox
+    // set the input's type to checkbox
     checkbox.type = "checkbox";
 
     // set the title
@@ -29,10 +29,16 @@ function onReady() {
 
     //empty the input
     newToDoText.value = '';
+
   });
+}
+function deleteItem() {
+  const deleteTodoForm = document.getElementById('deleteTodoForm');
+  const item = document.getElementById('li');
+  ul.removeLi(item);
 }
 
 window.onload = function() {
-  alert("The window has loaded");
+
   onReady();
 };
