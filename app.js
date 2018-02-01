@@ -1,44 +1,48 @@
 function onReady() {
-  const addToDoForm = document.getElementById('addToDoForm');
-  const newToDoText = document.getElementById('newToDoText');
-  const toDoList = document.getElementById('toDoList');
+  let toDos = [];
+   const addToDoForm = document.getElementById('addToDoForm');
+   const newToDoText = document.getElementById('newToDoText');
+   const toDoList = document.getElementById('toDoList');
 
-  addToDoForm.addEventListener('submit', () =>){
-    event.preventDefault();
+    function createNewToDo() {
+      if (!newToDoText.value) {return; }
 
-    // get the newToDoText
-    let title = newToDoText.value;
+      toDos.push({
+        title: newToDoText.value,
+        complete: false
+      });
 
-    // create a new li
-    let newLi = document.createElement('li');
+      newToDoText.value = '';
 
-    // create a new input
-    let checkbox = document.createElement('input');
+      renderTheUI();
+    }
+    function renderTheUI() {
+      const toDoList = document.getElementById('toDoList');
 
-    // set the input's type to checkbox
-    checkbox.type = "checkbox";
+      toDoList.textContent = '';
 
-    // set the title
-    newLi.textContent = title;
+      toDos.forEach(function(toDo)) {
+        const newToDo = document.createElement('li');
 
-    // attach the checkbox to the li
-    newLi.appendChild(checkbox);
+        const checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
 
-    // attach the li to the ul
-    toDoList.appendChild(newLi);
+        const title = document.createElement('span');
+        title.textContent = toDo.title;
 
-    //empty the input
-    newToDoText.value = '';
+        toDoList.appendChild(newLi);
+        newLi.appendChild(checkbox);
+      });
+    }
 
-  });
-}
-function deleteItem() {
-  const deleteTodoForm = document.getElementById('deleteTodoForm');
-  const item = document.getElementById('li');
-  ul.removeLi(item);
+    addToDoForm.addEventListener('submit', event =>{
+      event.preventDefault();
+      createNewToDo();
+      newToDoText.value = '';
+    });
+    renderTheUI();
 }
 
 window.onload = function() {
-
   onReady();
 };
