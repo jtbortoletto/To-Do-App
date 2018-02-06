@@ -11,33 +11,47 @@ function onReady() {
       toDos.push({
         title: newToDoText.value,
         complete: false,
-        id: id.value
+        id: id
       });
 
       newToDoText.value = '';
 
       renderTheUI();
     }
+
     function deleteToDo(id) {
-      toDos = toDo.filter(item => item.id !== id);
+      toDos = toDos.filter(item => item.id !== id);
+      return toDos;
     }
+
     function renderTheUI() {
       const toDoList = document.getElementById('toDoList');
 
       toDoList.textContent = '';
 
-      toDos.forEach(function(toDo)) {
+      toDos.forEach(function(toDo) {
         const newToDo = document.createElement('li');
 
         const checkbox = document.createElement('input');
         checkbox.type = "checkbox";
 
-        const title = document.createElement('span');
-        title.textContent = toDo.title;
+        //const title = document.createElement('span');
+        newToDo.textContent = toDo.title;
 
-        toDoList.appendChild(newLi);
-        newLi.appendChild(checkbox);
-        deleteButton.appendChild(newLi);
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = `<span>Delete To Do </span>`
+
+        toDoList.appendChild(newToDo);
+        newToDo.appendChild(checkbox);
+        newToDo.appendChild(deleteButton);
+
+        deleteButton.addEventListener('click', () =>{
+          //event.preventDefault();
+          toDos = deleteToDo(toDo.id);
+          renderTheUI();
+          //newToDoText.value = '';
+
+        });
       });
     }
 
@@ -47,13 +61,7 @@ function onReady() {
       newToDoText.value = '';
 
     });
-    addToDoForm.addEventListener('delete', event =>{
-      event.preventDefault();
-      deleteToDo();
-      renderTheUI();
-      newToDoText.value = '';
 
-    });
     renderTheUI();
 }
 
